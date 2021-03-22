@@ -1,0 +1,25 @@
+{
+  "name": "learn-starter",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3003",
+    "build": "next build",
+    "start": "next start -p 3003",
+    "export": "next export",
+    "deploy": "npm run build && npm run export",
+    "serve": "npm run build && npm run start"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cookie": "^0.4.1",
+    "csrf": "^3.1.0",
+    "moment": "^2.29.1",
+    "next": "^10.0.0",
+    "next-cookies": "^2.0.3",
+    "next-flash": "^1.0.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "redis": "^3.0.2"
+  }
+}

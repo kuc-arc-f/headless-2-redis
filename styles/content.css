@@ -1,0 +1,17 @@
+/*
+.home_wrap .example {
+  font-size: 30px;
+}
+*/
+.content_list_wrap .p_apikey {
+  font-size: 1.0rem; 
+  color: gray;
+}
+.content_list_wrap .content_title {
+  color: gray;
+}
+.content_list_wrap .content_table .p_title{ 
+  font-size: 1.4rem; 
+  font-weight : bold;
+}
+.content_list_wrap .webhook_wrap{ text-align: right }
