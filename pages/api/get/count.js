@@ -19,7 +19,9 @@ export default async function (req, res){
     var site = LibSite.get_site(reply_items, apikey)
     if(site == null){ throw new Error('error, apikey NG'); }
     var site_id = site.id
-    var items = await LibRedis.get_keys_items(client, "content:*")
+    var keys = `content:${site_id}:*`
+//console.log("site_id=", site_id, keys);
+    var items = await LibRedis.get_keys_items(client, keys)
     items= LibContentType.get_site_items(items, site_id)
     items = LibContent.get_name_items(items, content_name)
 // console.log(items.length );

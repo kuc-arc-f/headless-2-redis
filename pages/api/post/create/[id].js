@@ -37,12 +37,12 @@ export default async function (req, res){
     reply_items= LibContentType.get_site_items(reply_items, site_id)
     reply_items = LibContent.get_name_items(reply_items, content_name) 
     var column = reply_items[0]
+//    var column_id = column.id
     var coluValues = JSON.parse(column.values || '[]')
     var newData = LibApiCreate.valid_post(data, coluValues) 
     var newDataJson = JSON.stringify( newData );     
-//console.log( newDataJson  )
     var replyIdx = await incrAsync("idx-content");
-    var key = "content:" + String(replyIdx)
+    var key = "content:" + site_id +":"+ String(replyIdx)
     var item = {
       id: replyIdx,
       name: content_name,

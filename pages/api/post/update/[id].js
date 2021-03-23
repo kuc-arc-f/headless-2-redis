@@ -43,12 +43,13 @@ export default async function (req, res){
     var newData = LibApiCreate.valid_post(data, coluValues)
     var newDataJson = JSON.stringify( newData );     
     //conten
-    var reply = await getAsync("content:" + id);
+    var key = "content:" + site_id +":"+ String(id)
+    var reply = await getAsync(key);
     var content = await JSON.parse(reply || '[]')
     content.values = newDataJson
 //console.log( content )
     var json = JSON.stringify( content );
-    await setAsync("content:" + id , json)
+    await setAsync(key , json)
     res.json({return: 1})
   } catch (err) {
     console.log(err);

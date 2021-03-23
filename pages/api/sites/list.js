@@ -2,7 +2,6 @@ const redis = require("redis");
 const {promisify} = require('util');
 const client = redis.createClient();
 const keysAsync = promisify(client.keys).bind(client);
-//const zrevrangeAsync = promisify(client.zrevrange).bind(client);
 const mgetAsync = promisify(client.mget).bind(client);
 import LibApiFind from '../../../libs/LibApiFind'
 import LibCommon from '../../../libs/LibCommon'

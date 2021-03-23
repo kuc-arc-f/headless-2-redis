@@ -26,12 +26,14 @@ export default async function (req, res){
     }
     var id = data.id
 //console.log( "id=", id  )
-//    var where = { key:  apikey }
     var reply_items = await LibRedis.get_keys_items(client, "site:*")
     var key = LibSite.get_site(reply_items, apikey)
     if(key == null){ throw new Error('Invalid key , apikeys') }
-//console.log( "site_id=", key.site_id )
-    await delAsync("content:" + id)
+    var site_id = key.id 
+//console.log( "site_id=", site_id )
+    var keyContent = "content:" + site_id +":"+ String(id)
+//console.log( "keyContent=", keyContent )
+    await delAsync(keyContent)
     res.json({return: 1})
   } catch (err) {
     console.log(err);

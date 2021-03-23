@@ -15,7 +15,7 @@ export default {
   valid_contain : function(items , id){
     var ret = true
     items.forEach(function(item){
-      if(item._id.toString()  === id){
+      if(item.id.toString()  === id){
 //console.log( "ng.id=",item._id.toString(), id);
         ret = false
       }
@@ -32,7 +32,7 @@ export default {
         var pos = content_value.indexOf(key)
         if(pos != (-1)){
 //console.log( "items.id=", item._id);
-          var valid = self.valid_contain(ret, item._id.toString( ))
+          var valid = self.valid_contain(ret, item.id.toString( ))
 //console.log( "value=",item._id ,value_item.value );
           if(valid){ ret.push(item) }
         }

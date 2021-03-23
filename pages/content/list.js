@@ -54,11 +54,11 @@ console.log("site_id=", site_id)
     if( typeof this.props.query.column !='undefined'){
       column_id = this.props.query.column
       var url_content = '/api/content/list_id?site_id='+ site_id + "&id=" + column_id
-//      url_content += "&page=" + String(page)
+      url_content += "&page=" + String(page)
       const resContent = await fetch(process.env.BASE_URL + url_content )
       const jsonContent = await resContent.json()
       contents = jsonContent.items
-// /      contents = LibCommon.convert_items(contents)    
+      contents = LibCommon.convert_items(contents)    
     }    
 //console.log( item )  
     this.setState({
@@ -102,7 +102,7 @@ console.log("site_id=", site_id)
 //          console.log( "keyCode=" , e.keyCode )
 //console.log("#addSearchEvent=" , elem.value )
           var column_id = self.state.column_id
-          var site_id= self.state.item._id
+          var site_id= self.state.item.id
           var item = {
             search_key: elem.value,
             column_id: column_id,
@@ -169,12 +169,12 @@ console.log("#parentMethod.p=" + page )
     var content_url =`/content/edit?site_id=${site_id}&content_name=${item.name}`
     var url_new = `/content/create?content_id=${column_id}&site_id=${site_id}`
     var contents = this.state.contents 
-console.log( contents )
+//console.log( contents )
     const items = this.state.columns 
 // console.log("pagingDisplay=" ,this.props.pagingDisplay )
     return (
     <LayoutAdmin >
-      <NaviAdmin  site_name={item.name} site_id={item._id} />
+      <NaviAdmin  site_name={item.name} site_id={item.id} />
       <FlashBox messages_error={messages_error} />
       <div className="container content_list_wrap">
         <div className="row">
@@ -188,7 +188,7 @@ console.log( contents )
         </div>
           <hr className="mt-0 mb-2" />
           <div className="row">
-          <div className="col-sm-4 p_apikey">Site_id : {item._id}<br />
+          <div className="col-sm-4 p_apikey">Site_id : {item.id}<br />
           </div>
           <div className="col-sm-4 p_apikey" >
             API KEY : {key}
@@ -239,7 +239,7 @@ console.log( contents )
             {contents.map((item, index) => {
               var values = item.values
               values = JSON.parse(values || '[]')
-console.log( content_url )
+//console.log( content_url )
               return(<ContentRow key={index}
                 id={item.id} date={item.created_at}
                 content_url={content_url+ `&id=${item.id}`} 

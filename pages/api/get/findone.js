@@ -1,6 +1,7 @@
 const redis = require("redis");
 const {promisify} = require('util');
 const client = redis.createClient();
+const getAsync = promisify(client.get).bind(client);
 import LibRedis from '../../../libs/LibRedis'
 import LibSite from '../../../libs/LibSite'
 import LibCommon from '../../../libs/LibCommon'
@@ -16,11 +17,14 @@ export default async function (req, res){
     reply_items = await LibRedis.get_keys_items(client, "site:*")
     var site = LibSite.get_site(reply_items, apikey)
     if(site==null){ throw new Error('error, apikey NG'); }
-//console.log(site)  
-    var items = await LibRedis.get_keys_items(client, "content:*")
-    var item = LibRedis.get_item(items, id) 
-    item = LibApiFind.convertItemOne(item)
+    var site_id = site.id
+    var key = `content:${site_id}:${id}`
+//console.log("key=", key, id) 
+    var reply = await getAsync(key); 
+    var row = JSON.parse(reply || '[]')
+//console.log(row);
 //console.log(item);
+    var item = LibApiFind.convertItemOne(row)
     res.json(item);
   } catch (err) {
     console.log(err);
