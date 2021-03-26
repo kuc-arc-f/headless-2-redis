@@ -1,11 +1,10 @@
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-
-const getAsync = promisify(client.get).bind(client);
 //
 export default async function (req, res){
   try{
+    const client = redis.createClient();
+    const getAsync = promisify(client.get).bind(client);
     var id = req.query.id
 //console.log("id=", id );
     var reply = await getAsync("site:" + id);

@@ -1,6 +1,5 @@
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
 import LibRedis from '../../../libs/LibRedis'
 import LibCommon from '../../../libs/LibCommon'
 import LibSite from '../../../libs/LibSite'
@@ -14,6 +13,10 @@ export default async function (req, res){
 //console.log(req.query );
     var content_name = req.query.content
     var apikey = req.query.apikey
+    if(typeof req.query.apikey =='undefined'){
+      throw new Error('Invalid header , APIKEY');
+    }    
+    const client = redis.createClient();
 //console.log(content_name ,apikey );
     var reply_items = []
     reply_items = await LibRedis.get_keys_items(client, "site:*")

@@ -4,10 +4,6 @@ import Link from 'next/link';
 
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const incrAsync = promisify(client.incr).bind(client);
-const getAsync = promisify(client.get).bind(client);
-const setAsync = promisify(client.set).bind(client);
 import LibApiCreate from "../../../../libs/LibApiCreate"
 import LibRedis from "../../../../libs/LibRedis"
 import LibSite from '../../../../libs/LibSite'
@@ -19,10 +15,12 @@ export default async function (req, res){
     if(typeof req.headers.apikey =='undefined'){
       throw new Error('Invalid header , APIKEY');
     }
+    const client = redis.createClient();
+    const incrAsync = promisify(client.incr).bind(client);
+    const setAsync = promisify(client.set).bind(client);
     var content_name = req.query.id
     var apikey = req.headers.apikey
     var data = req.body
-    var token =data._token
 //console.log( "key=", apikey )
 //console.log( "content_name=", content_name )
 //console.log( data )

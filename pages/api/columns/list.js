@@ -1,16 +1,16 @@
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const keysAsync = promisify(client.keys).bind(client);
-const mgetAsync = promisify(client.mget).bind(client);
 //import LibRedis from '../../../libs/LibRedis'
 import LibCommon from '../../../libs/LibCommon'
 import LibContentType from '../../../libs/LibContentType'
 //
 export default async function (req, res){
   try{
+    const client = redis.createClient();
+    const keysAsync = promisify(client.keys).bind(client);
+    const mgetAsync = promisify(client.mget).bind(client);
     var site_id = req.query.site_id 
-console.log( "site_id=", site_id )
+//console.log( "site_id=", site_id )
     var data = await keysAsync("column:*");
     var reply_items = []
     if(data.length > 0){

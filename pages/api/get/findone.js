@@ -1,7 +1,5 @@
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const getAsync = promisify(client.get).bind(client);
 import LibRedis from '../../../libs/LibRedis'
 import LibSite from '../../../libs/LibSite'
 import LibCommon from '../../../libs/LibCommon'
@@ -11,6 +9,11 @@ export default async function (req, res){
   try{
 //console.log(req.query );
     var apikey = req.query.apikey
+    if(typeof req.query.apikey =='undefined'){
+      throw new Error('Invalid header , APIKEY');
+    }      
+    const client = redis.createClient();
+    const getAsync = promisify(client.get).bind(client);
 //console.log(apikey );
     var id = req.query.id
     var reply_items = []

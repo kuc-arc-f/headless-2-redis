@@ -4,10 +4,6 @@ var tokens = new csrf();
 
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const keysAsync = promisify(client.keys).bind(client);
-//const zrevrangeAsync = promisify(client.zrevrange).bind(client);
-const mgetAsync = promisify(client.mget).bind(client);
 import LibCommon from '../../../libs/LibCommon'
 import LibAuth from '../../../libs/LibAuth'
 //
@@ -20,6 +16,9 @@ export default async (req, res) => {
       if(tokens.verify(process.env.CSRF_SECRET, data._token) === false){
         throw new Error('Invalid Token, csrf_check');
       }
+      const client = redis.createClient();
+      const keysAsync = promisify(client.keys).bind(client);
+      const mgetAsync = promisify(client.mget).bind(client);
       var reply_items = []
       var items = await keysAsync("user:*");
       if(items.length > 0){

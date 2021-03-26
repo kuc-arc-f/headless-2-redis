@@ -3,8 +3,6 @@ import React from 'react'
 import Link from 'next/link';
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const delAsync = promisify(client.del).bind(client);
 
 import LibRedis from '../../../../libs/LibRedis'
 import LibSite from '../../../../libs/LibSite'
@@ -16,6 +14,8 @@ export default async function (req, res){
     if(typeof req.headers.apikey =='undefined'){
       throw new Error('Invalid header , APIKEY');
     }
+    const client = redis.createClient();
+    const delAsync = promisify(client.del).bind(client);
     var content_name = req.query.id
     var apikey = req.headers.apikey
     var data = req.body

@@ -2,21 +2,21 @@ var csrf = require('csrf');
 var tokens = new csrf();
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const incrAsync = promisify(client.incr).bind(client);
-const setAsync = promisify(client.set).bind(client);
 import LibRedis from "../../../libs/LibRedis"
 
 //
 export default async function (req, res){
   try{
+    const client = redis.createClient();
+    const incrAsync = promisify(client.incr).bind(client);
+    const setAsync = promisify(client.set).bind(client);
     LibRedis.init(client)
     var data = req.body
     var token =data._token
     var site_id = data.site_id
 //console.log(data)
 console.log("site_id=", site_id)
-    LibRedis.init(client)
+//    LibRedis.init(client)
     var replyIdx = await incrAsync("idx-column");
 // console.log( dat.length )
     var item = {

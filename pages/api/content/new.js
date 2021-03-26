@@ -3,16 +3,15 @@ var tokens = new csrf();
 
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const incrAsync = promisify(client.incr).bind(client);
-//const getAsync = promisify(client.get).bind(client);
-const setAsync = promisify(client.set).bind(client);
 import LibRedis from "../../../libs/LibRedis"
 //
 export default async function (req, res){
   try{
     var data = req.body
     var token =data._token
+    const client = redis.createClient();
+    const incrAsync = promisify(client.incr).bind(client);
+    const setAsync = promisify(client.set).bind(client);
     LibRedis.init(client)
     var replyIdx = await incrAsync("idx-content");
 //console.log( data )

@@ -34,6 +34,7 @@ export default class extends React.Component {
       apikey: '',
       pagingDisplay: 0,
       page: 0,
+      count: 0,
     }
   } 
   async componentDidMount(){
@@ -80,6 +81,8 @@ console.log("site_id=", site_id)
       const resContent = await fetch(process.env.BASE_URL + url_content )
       const jsonContent = await resContent.json()
       var contents = jsonContent.items
+      var count = jsonContent.count
+
       LibPagenate.init()
       var display = LibPagenate.is_paging_display(contents.length)  
       //contents = LibCommon.convert_items(contents)       
@@ -89,6 +92,7 @@ console.log("site_id=", site_id)
         column_id: id,
         pagingDisplay: display,
         page: 1,
+        count: count,
       })     
 //      var elemKey = document.getElementById('search_key');
 //      elemKey.value = ""
@@ -224,10 +228,15 @@ console.log("#parentMethod.p=" + page )
           </div>
           <div className="col-sm-8">
             {column_id ? 
-            <div>
-              <Link href={url_new}>
-                <a className="btn btn-sm btn-primary mt-0">Ceate Content</a>
-              </Link>
+            <div className="row">
+              <div className="col-sm-6">
+                <Link href={url_new}>
+                  <a className="btn btn-sm btn-primary mt-0">Ceate Content</a>
+                </Link>
+              </div>
+              <div className="col-sm-6">Count : {this.state.count} ,
+              Page : {this.state.page}
+              </div>
             </div>
             : ""}
             <table className="table table-hover content_table mt-2">

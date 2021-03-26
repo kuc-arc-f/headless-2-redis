@@ -1,14 +1,14 @@
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-const keysAsync = promisify(client.keys).bind(client);
-const mgetAsync = promisify(client.mget).bind(client);
 import LibApiFind from '../../../libs/LibApiFind'
 import LibCommon from '../../../libs/LibCommon'
 
 //
 export default async function (req, res){
   try{
+    const client = redis.createClient();
+    const keysAsync = promisify(client.keys).bind(client);
+    const mgetAsync = promisify(client.mget).bind(client);
     var data = await keysAsync("site:*");
     var reply_items = []
     if(data.length > 0){

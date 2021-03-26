@@ -1,12 +1,11 @@
 const redis = require("redis");
 const {promisify} = require('util');
-const client = redis.createClient();
-
-const getAsync = promisify(client.get).bind(client);
 //
 export default async function (req, res){
   try{
 //console.log(req.query);
+    const client = redis.createClient();
+    const getAsync = promisify(client.get).bind(client);
     var id = req.query.id
     var site_id = req.query.site_id
     var key = "content:" + site_id +":"+ String(id)

@@ -13,7 +13,7 @@ import EditRow from './EditRow'
 //
 export default class extends Component {
   static async getInitialProps(ctx) {
-console.log("q=", ctx.query)
+//console.log("q=", ctx.query)
     var site_id = cookies(ctx).site_id
     var column_id = ctx.query.content_type_id
     var url = process.env.BASE_URL + '/api/token_get'
