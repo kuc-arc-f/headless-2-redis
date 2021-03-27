@@ -6,7 +6,7 @@
 
  date    : 2021/03/21
 
- update  : 2021/03/27
+ update  : 2021/03/28
 
 ***
 ### Summary
@@ -63,6 +63,11 @@ https://github.com/kuc-arc-f/headless-2-redis/blob/main/doc/manual_doc/3_api_sam
 ### SSG sample, Next.js 
 
 https://github.com/kuc-arc-f/jamstack-ex5
+
+***
+### Next.js , Cross domain CRUD sample
+
+https://github.com/kuc-arc-f/next_cross3
 
 ***
 ### Document
