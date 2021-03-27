@@ -11,7 +11,8 @@ export default async (req, res) => {
   try{
     const client = redis.createClient();
     var data = await LibRedis.get_keys_items(client, "user:*")
-//console.log(data.length)    
+//console.log(data.length)   
+    client.quit() 
     res.json({count: data.length })
   } catch (err) {
     console.log(err);

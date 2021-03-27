@@ -58,6 +58,7 @@ export default async function (req, res){
       }
     }
 //console.log(items.length);  
+    client.quit()
     res.json(items);
   } catch (err) {
       console.log(err);

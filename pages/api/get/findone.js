@@ -28,6 +28,7 @@ export default async function (req, res){
 //console.log(row);
 //console.log(item);
     var item = LibApiFind.convertItemOne(row)
+    client.quit()
     res.json(item);
   } catch (err) {
     console.log(err);

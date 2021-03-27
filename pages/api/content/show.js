@@ -17,6 +17,7 @@ export default async function (req, res){
     var ret ={
       item: item
     }
+    client.quit()
     res.json(ret);
   } catch (err) {
       console.log(err);

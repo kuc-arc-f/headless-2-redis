@@ -17,6 +17,7 @@ console.log(data)
     const delAsync = promisify(client.del).bind(client);
     var key = "content:" + site_id +":"+ String(id)
     await delAsync(key)
+    client.quit()
 //console.log(data);
     var ret ={
       id: id

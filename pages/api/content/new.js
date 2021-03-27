@@ -29,7 +29,8 @@ export default async function (req, res){
 console.log( item )
     var key = "content:" + site_id +":"+ String(replyIdx)
     var json = JSON.stringify( item );
-    await setAsync(key , json)      
+    await setAsync(key , json) 
+    client.quit()     
     var url = `/content/list?site_id=${item.site_id}&column=${item.column_id}`
 //    console.log( "url=",url  )
     if (res) {

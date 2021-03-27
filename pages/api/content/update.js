@@ -21,7 +21,8 @@ export default async function (req, res){
     itemOne.values = data.colmuns_json
 //console.log( "key=",key)
     var json = JSON.stringify( itemOne );
-    await setAsync(key , json)    
+    await setAsync(key , json)
+    client.quit()    
     var url = `/content/list?site_id=${itemOne.site_id}&column=${itemOne.column_id}`
 //console.log( "url=",url  )   
     if (res) {

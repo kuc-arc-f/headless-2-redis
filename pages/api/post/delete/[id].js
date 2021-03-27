@@ -34,6 +34,7 @@ export default async function (req, res){
     var keyContent = "content:" + site_id +":"+ String(id)
 //console.log( "keyContent=", keyContent )
     await delAsync(keyContent)
+    client.quit()
     res.json({return: 1})
   } catch (err) {
     console.log(err);

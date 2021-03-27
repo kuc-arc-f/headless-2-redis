@@ -28,6 +28,7 @@ export default async (req, res) => {
 //console.log(reply_items)        
       var item = LibAuth.get_user(reply_items, data.mail)
       if(item == null){ return res.json(retArr); }
+      client.quit()
 console.log(item)        
       if (data.mail === item.mail
         && bcrypt.compareSync(data.password,  item.password )){

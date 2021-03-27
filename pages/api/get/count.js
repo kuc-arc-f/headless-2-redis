@@ -26,6 +26,7 @@ export default async function (req, res){
     items= LibContentType.get_site_items(items, site_id)
     items = LibContent.get_name_items(items, content_name)
 // console.log(items.length );
+    client.quit()
     res.json({count : items.length });
   } catch (err) {
     console.log(err);

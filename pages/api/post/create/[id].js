@@ -53,6 +53,7 @@ export default async function (req, res){
 //console.log( item )
     var json = JSON.stringify( item );
     await setAsync(key , json)
+    client.quit()
     res.json({return: 1})
   } catch (err) {
     console.log(err);

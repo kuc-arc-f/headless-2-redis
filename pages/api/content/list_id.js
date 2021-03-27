@@ -37,6 +37,7 @@ export default async function (req, res){
     var ret ={
       items: reply_items , count: all_items.length,
     }
+    client.quit()
     res.json(ret);
   } catch (err) {
       console.log(err);
