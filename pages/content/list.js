@@ -94,16 +94,16 @@ console.log("site_id=", site_id)
         page: 1,
         count: count,
       })     
-//      var elemKey = document.getElementById('search_key');
-//      elemKey.value = ""
-//      this.addSearchEvent(elemKey)
+      var elemKey = document.getElementById('search_key');
+      elemKey.value = ""
+      this.addSearchEvent(elemKey)
   }
   async addSearchEvent(elem){
     var self = this
     elem.addEventListener('keypress',async function(e){
       try {
+//console.log( "keyCode=" , e.keyCode )
         if (e.keyCode === 13) {
-//          console.log( "keyCode=" , e.keyCode )
 //console.log("#addSearchEvent=" , elem.value )
           var column_id = self.state.column_id
           var site_id= self.state.item.id
@@ -233,6 +233,8 @@ console.log("#parentMethod.p=" + page )
                 <Link href={url_new}>
                   <a className="btn btn-sm btn-primary mt-0">Ceate Content</a>
                 </Link>
+                <input type="text" id="search_key" name="search_key" autoComplete="off" 
+                className="form-control mt-2"placeholder="Search key input , and Return" />                
               </div>
               <div className="col-sm-6">Count : {this.state.count} ,
               Page : {this.state.page}
