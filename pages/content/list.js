@@ -60,13 +60,14 @@ console.log("site_id=", site_id)
       const jsonContent = await resContent.json()
       contents = jsonContent.items
       contents = LibCommon.convert_items(contents)    
+//console.log( contents )  
     }    
-//console.log( item )  
     this.setState({
       item:item , 
       column_id: column_id,
       columns :jsonColumn.items ,
       contents: contents,
+//      contents: [],
       apikey: apikey,
       pagingDisplay: display,
       page: page,
@@ -173,9 +174,8 @@ console.log("#parentMethod.p=" + page )
     var content_url =`/content/edit?site_id=${site_id}&content_name=${item.name}`
     var url_new = `/content/create?content_id=${column_id}&site_id=${site_id}`
     var contents = this.state.contents 
-//console.log( contents )
+//console.log( this.state.contents  )
     const items = this.state.columns 
-// console.log("pagingDisplay=" ,this.props.pagingDisplay )
     return (
     <LayoutAdmin >
       <NaviAdmin  site_name={item.name} site_id={item.id} />
@@ -249,11 +249,10 @@ console.log("#parentMethod.p=" + page )
             <tbody>
             {contents.map((item, index) => {
               var values = item.values
-              values = JSON.parse(values || '[]')
-//console.log( content_url )
+//console.log( item.column_id )
               return(<ContentRow key={index}
-                id={item.id} date={item.created_at}
-                content_url={content_url+ `&id=${item.id}`} 
+                id={item.id} date={item.created_at} column_id={item.column_id}
+                content_url={content_url+ `&id=${item.id}&column_id=${item.column_id}`} 
                 row1_name={values[0].name} row1_value={values[0].value } />
               )
             })}

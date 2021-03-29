@@ -12,20 +12,20 @@ import LibContent from '../../libs/LibContent'
 //
 export default class extends Component {
   static async getInitialProps(ctx) {
-// console.log("query=", ctx.query )
+//console.log("query=", ctx.query )
     var id = ctx.query.id
+    var column_id = ctx.query.column_id
     var site_id = ctx.query.site_id
     var content_name = ctx.query.content_name
     var url = process.env.BASE_URL + '/api/token_get'
     const res = await fetch(url)
     const json = await res.json()
     var url_show = '/api/content/show?site_id=' + site_id + '&content_name='+content_name
-    url_show += "&id=" + id
+    url_show += "&id=" + id +"&column_id=" + column_id
 // console.log( url_show )
     const resContent = await fetch(process.env.BASE_URL + url_show)
     const jsonContent = await resContent.json() 
 //console.log(  jsonContent )    
-    var column_id = jsonContent.item.column_id
     url = process.env.BASE_URL +'/api/columns/show?id=' + column_id
     url += "&site_id="+ site_id
     const resColmun = await fetch(url)
@@ -35,10 +35,12 @@ export default class extends Component {
     return { 
       user_id :cookies(ctx).user_id,
       site_id :cookies(ctx).site_id,
+      column_id: column_id,
       csrf: json.csrf,
       content_id: id,
       columns: columns,
       content: jsonContent.item,
+//      content: {},
       content_name: jsonColmun.item.name
     }
   }  
@@ -68,6 +70,7 @@ console.log(props.content )
         content_name: content_name,
         id: this.props.content_id,
         site_id: this.props.site_id,
+        column_id: this.props.column_id,
         _token: this.state._token
       }
 //console.log(item)
@@ -120,10 +123,10 @@ console.log(props.content )
   render() {
     var columns = this.props.columns
     var site_id = this.props.site_id
+    var column_id = this.props.column_id
     var content_name = this.props.content_name
     var contentObj = this.props.content.values
-    contentObj = JSON.parse(contentObj || '[]')
-//console.log(contentObj)
+//console.log(column_id)
     return (
     <LayoutAdmin>
       <NaviAdmin  site_name={""} site_id={site_id} />
@@ -131,6 +134,7 @@ console.log(props.content )
         <form action="/api/content/update" method="post" id="myForm" name="myForm">
           <input type="hidden" id="colmuns_json" name="colmuns_json" />
           <input type="hidden" id="site_id" name="site_id" value={site_id}/> 
+          <input type="hidden" id="column_id" name="column_id" value={column_id}/> 
           <input type="hidden" id="id" name="id" value={this.props.content_id}/> 
           <input type="hidden" id="content_name" name="content_name" value={content_name}/> 
           <Link href={`/content/list?site_id=${site_id}`}>

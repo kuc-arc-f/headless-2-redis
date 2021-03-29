@@ -6,8 +6,8 @@ const {promisify} = require('util');
 
 import LibRedis from '../../../../libs/LibRedis'
 import LibSite from '../../../../libs/LibSite'
-import LibApiFind from '../../../../libs/LibApiFind'
-import LibApiCreate from "../../../../libs/LibApiCreate"
+//import LibContentType from '../../../../libs/LibContentType'
+import LibContent from '../../../../libs/LibContent'
 //
 export default async function (req, res){
   try{
@@ -30,8 +30,14 @@ export default async function (req, res){
     var key = LibSite.get_site(reply_items, apikey)
     if(key == null){ throw new Error('Invalid key , apikeys') }
     var site_id = key.id 
-//console.log( "site_id=", site_id )
-    var keyContent = "content:" + site_id +":"+ String(id)
+    var keys = `column:${site_id}:*`
+    reply_items = await LibRedis.get_keys_items(client, keys)
+    reply_items = LibContent.get_name_items(reply_items, content_name)
+//console.log( reply_items ) 
+    var column = reply_items[0]
+//console.log( column.id ) 
+    var column_id = column.id    
+    var keyContent = "content:" + site_id +":" + String(column_id) +":" + String(id)
 //console.log( "keyContent=", keyContent )
     await delAsync(keyContent)
     client.quit()

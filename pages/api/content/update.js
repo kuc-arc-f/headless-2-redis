@@ -15,11 +15,13 @@ export default async function (req, res){
 //console.log(data)
     var id = data.id
     var site_id = data.site_id
-    var key = "content:" + site_id +":"+ String(id)
+    var column_id = data.column_id
+    var key = "content:" + site_id +":" + String(column_id) +":" + String(id)
+//console.log(key)
     var reply = await getAsync(key);
     var itemOne = await JSON.parse(reply || '[]') 
-    itemOne.values = data.colmuns_json
-//console.log( "key=",key)
+    var values = JSON.parse(data.colmuns_json || '[]')
+    itemOne.values = values
     var json = JSON.stringify( itemOne );
     await setAsync(key , json)
     client.quit()    

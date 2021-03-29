@@ -35,24 +35,24 @@ export default async function (req, res){
     reply_items= LibContentType.get_site_items(reply_items, site_id)
     reply_items = LibContent.get_name_items(reply_items, content_name) 
     var column = reply_items[0]
-//    var column_id = column.id
+    var column_id = column.id
     var coluValues = JSON.parse(column.values || '[]')
     var newData = LibApiCreate.valid_post(data, coluValues) 
-    var newDataJson = JSON.stringify( newData );     
     var replyIdx = await incrAsync("idx-content");
-    var key = "content:" + site_id +":"+ String(replyIdx)
+//    var key = "content:" + site_id +":"+ String(replyIdx)
+    var key = "content:" + site_id +":" + String(column_id) +":" + String(replyIdx)    
     var item = {
       id: replyIdx,
       name: content_name,
-      column_id: column.id.toString(),
+      column_id: String(column_id),
       site_id: site_id,
-      values: newDataJson,
+      values: newData,
       user_id: "",
       created_at: new Date(),
     };
-//console.log( item )
     var json = JSON.stringify( item );
     await setAsync(key , json)
+//console.log( item )
     client.quit()
     res.json({return: 1})
   } catch (err) {

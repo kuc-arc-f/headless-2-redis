@@ -16,14 +16,13 @@ export default async function (req, res){
     var site_id = req.query.site_id
 //console.log("id=", id, site_id)
     var page = req.query.page
-    var keys = `content:${site_id}:*`
+    var keys = `content:${site_id}:${id}:*`
     var data = await keysAsync(keys);
     var reply_items = []
     var all_items = []
     if(data.length > 0){
       reply_items = await mgetAsync(data);
       reply_items = LibCommon.string_to_obj(reply_items)
-      reply_items = LibCms.get_colmun_items(reply_items, id)
       all_items = reply_items
       reply_items = LibApiFind.get_order_items(reply_items, "id", "DESC")
       LibPagenate.init();

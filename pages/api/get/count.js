@@ -20,14 +20,20 @@ export default async function (req, res){
     var site = LibSite.get_site(reply_items, apikey)
     if(site == null){ throw new Error('error, apikey NG'); }
     var site_id = site.id
-    var keys = `content:${site_id}:*`
+    var keys = `column:${site_id}:*`
+    reply_items = await LibRedis.get_keys_items(client, keys)
+    reply_items = LibContent.get_name_items(reply_items, content_name)    
+    if(reply_items.length < 1){ throw new Error('error, column nothing'); }
+    var column = reply_items[0]
+    var column_id = column.id     
+    var keys = `content:${site_id}:${column_id}:*`
 //console.log("site_id=", site_id, keys);
-    var items = await LibRedis.get_keys_items(client, keys)
-    items= LibContentType.get_site_items(items, site_id)
-    items = LibContent.get_name_items(items, content_name)
-// console.log(items.length );
+    const keysAsync = promisify(client.keys).bind(client);
+    var data = await keysAsync(keys);
+// console.log(data);
+//console.log(data.length );
     client.quit()
-    res.json({count : items.length });
+    res.json({count : data.length });
   } catch (err) {
     console.log(err);
     res.status(500).send();    

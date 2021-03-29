@@ -27,7 +27,8 @@ export default {
     var self = this
     items.forEach(function(item){
       var values = item.values
-      values = JSON.parse(item.values || '[]')  
+//      values = JSON.parse(item.values || '[]')  
+      values = item.values  
 //console.log(values)
       values.map((value_item, index) =>{
         var content_value = value_item.value

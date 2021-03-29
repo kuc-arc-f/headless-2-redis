@@ -8,10 +8,10 @@ export default async function (req, res){
     const getAsync = promisify(client.get).bind(client);
     var id = req.query.id
     var site_id = req.query.site_id
-    var key = "content:" + site_id +":"+ String(id)
+    var column_id = req.query.column_id
+    var key = "content:" + site_id +":" + String(column_id) +":" + String(id)
 //console.log("key=" , key)
     var reply = await getAsync(key);
-//console.log(reply)
     var item = await JSON.parse(reply || '[]')        
 //console.log(item)
     var ret ={

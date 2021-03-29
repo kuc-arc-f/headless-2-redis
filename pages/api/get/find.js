@@ -23,7 +23,14 @@ export default async function (req, res){
     var site = LibSite.get_site(reply_items, apikey)
     if(site==null){ throw new Error('error, apikey NG'); }
     var site_id = site.id
-    var keys = `content:${site_id}:*`
+    var keys = `column:${site_id}:*`
+    reply_items = await LibRedis.get_keys_items(client, keys)
+    reply_items = LibContent.get_name_items(reply_items, content_name)    
+    if(reply_items.length < 1){ throw new Error('error, column nothing'); }
+    var column = reply_items[0]
+//console.log( column.id ) 
+    var column_id = column.id 
+    keys = `content:${site_id}:${column_id}:*`
 //console.log("site_id=", site_id, keys);
     var items = []
     // order
@@ -34,7 +41,6 @@ export default async function (req, res){
       var order_col = orderArr[0]
       var order_asc = orderArr[1]
       reply_items = await LibRedis.get_keys_items(client, keys )
-      reply_items = LibContent.get_name_items(reply_items, content_name)
       reply_items = LibApiFind.convert_items(reply_items) 
       items = LibApiFind.get_order_items(reply_items, order_col, order_asc)
       if(( typeof req.query.skip !='undefined') &&
@@ -46,7 +52,6 @@ export default async function (req, res){
     }else{
       var reply_items = []
       reply_items = await LibRedis.get_keys_items(client, keys )
-      reply_items = LibContent.get_name_items(reply_items, content_name)
       reply_items = LibApiFind.convert_items(reply_items) 
       items = LibApiFind.get_order_items(reply_items, "id", "DESC")
       if(( typeof req.query.skip !='undefined') &&
@@ -57,7 +62,7 @@ export default async function (req, res){
         )
       }
     }
-//console.log(items.length);  
+//console.log(items);  
     client.quit()
     res.json(items);
   } catch (err) {

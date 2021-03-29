@@ -11,12 +11,13 @@ export default {
         _id: item.id,
         created_at: item.created_at,
       }
-      var values = JSON.parse(item.values || '[]') 
+//      var values = JSON.parse(item.values || '[]') 
+      var values = item.values 
 //console.log(values)
 //console.log(typeof item.values)
-        values.forEach(function(value_item){
-          row[value_item.name] = value_item.value
-        })
+      values.forEach(function(value_item){
+        row[value_item.name] = value_item.value
+      })
       ret.push(row)                        
     });        
     return ret
@@ -28,7 +29,8 @@ export default {
       _id: item.id,
       created_at: item.created_at,
     }
-    var values = JSON.parse(item.values || '[]') 
+//    var values = JSON.parse(item.values || '[]') 
+    var values = item.values 
     values.forEach(function(value_item){
       row[value_item.name] = value_item.value
 //            console.log(value_item.name , value_item.value)

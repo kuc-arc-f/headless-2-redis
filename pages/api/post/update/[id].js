@@ -39,15 +39,16 @@ export default async function (req, res){
 //console.log( reply_items ) 
     reply_items = LibContent.get_name_items(reply_items, content_name)
     var column = reply_items[0]
+//console.log( column.id ) 
+    var column_id = column.id
     var coluValues = JSON.parse(column.values || '[]')
     var newData = LibApiCreate.valid_post(data, coluValues)
-    var newDataJson = JSON.stringify( newData );     
     //conten
-    var key = "content:" + site_id +":"+ String(id)
+    var key = "content:" + site_id +":" + String(column_id) +":" + String(id)
+//console.log( key )
     var reply = await getAsync(key);
     var content = await JSON.parse(reply || '[]')
-    content.values = newDataJson
-//console.log( content )
+    content.values = newData
     var json = JSON.stringify( content );
     await setAsync(key , json)
     client.quit()

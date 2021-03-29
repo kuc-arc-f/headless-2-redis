@@ -4,6 +4,7 @@ var tokens = new csrf();
 const redis = require("redis");
 const {promisify} = require('util');
 import LibRedis from "../../../libs/LibRedis"
+import LibContent from '../../../libs/LibContent'
 //
 export default async function (req, res){
   try{
@@ -13,21 +14,24 @@ export default async function (req, res){
     const incrAsync = promisify(client.incr).bind(client);
     const setAsync = promisify(client.set).bind(client);
     LibRedis.init(client)
+    var site_id = data.site_id
     var replyIdx = await incrAsync("idx-content");
 //console.log( data )
-    var site_id = data.site_id
     var cole_name = data.content_name
+    var column_id = data.column_id
+//console.log( "len=", reply_items.length ,column.id )
+    var values = JSON.parse(data.colmuns_json || '[]')
     var item = {
       id: replyIdx,
       name: cole_name,
       column_id: data.column_id,
       site_id: site_id,
-      values: data.colmuns_json,
+      values: values,
       user_id: "",
       created_at: new Date(),
     };    
-console.log( item )
-    var key = "content:" + site_id +":"+ String(replyIdx)
+//console.log( item )
+    var key = "content:" + site_id +":" + String(column_id) +":" + String(replyIdx)
     var json = JSON.stringify( item );
     await setAsync(key , json) 
     client.quit()     

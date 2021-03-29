@@ -20,13 +20,13 @@ export default async function (req, res){
     var site_id = data.site_id 
     var search_key = data.search_key 
     var limit = {skip: 0 , limit: 500 }
-    var keys = `content:${site_id}:*`
+    var keys = `content:${site_id}:${column_id}:*`
     var data = await keysAsync(keys);
     var reply_items = []
     if(data.length > 0){
       reply_items = await mgetAsync(data);
       reply_items = LibCommon.string_to_obj(reply_items)
-      reply_items = LibCms.get_colmun_items(reply_items, column_id)
+//console.log( reply_items )    
       reply_items = LibContent.getSearchItems(reply_items, search_key ,[] )
       reply_items = LibApiFind.get_order_items(reply_items, "id", "DESC")
       LibPagenate.init();
@@ -34,7 +34,6 @@ export default async function (req, res){
         reply_items, parseInt(limit.skip), parseInt(limit.limit)
       )      
     }    
-//console.log( items )    
     var ret ={
       items: reply_items
     }    
