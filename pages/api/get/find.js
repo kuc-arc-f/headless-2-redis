@@ -52,7 +52,7 @@ export default async function (req, res){
     }else{
       var reply_items = []
       reply_items = await LibRedis.get_keys_items(client, keys )
-      reply_items = LibApiFind.convert_items(reply_items) 
+//console.log(reply_items)
       items = LibApiFind.get_order_items(reply_items, "id", "DESC")
       if(( typeof req.query.skip !='undefined') &&
         ( typeof req.query.limit !='undefined')){
@@ -60,7 +60,10 @@ export default async function (req, res){
         items = LibPagenate.get_items(
           items, parseInt(req.query.skip), parseInt(req.query.limit)
         )
+      }else{
+        items = LibPagenate.get_items( items, 0, 10 )        
       }
+      items = LibApiFind.convert_items(items) 
     }
 //console.log(items);  
     client.quit()

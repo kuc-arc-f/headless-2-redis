@@ -1,6 +1,6 @@
 # headless-2-redis (BETA)
 
- Version: 0.9.1
+ Version: 0.9.2
 
  Author  : Kouji Nakashima / kuc-arc-f.com
 
