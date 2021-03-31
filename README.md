@@ -6,7 +6,7 @@
 
  date    : 2021/03/21
 
- update  : 2021/03/29
+ update  : 2021/03/31
 
 ***
 ### Summary
@@ -70,7 +70,9 @@ https://github.com/kuc-arc-f/jamstack-ex5
 https://github.com/kuc-arc-f/next_cross3
 
 ***
-### Document
+### Get Started / Document
+
+https://cms-kuc-headless2.netlify.app/pages/20210331075955
 
 ***
 ### Related : 
